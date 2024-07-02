@@ -1,5 +1,7 @@
 // images logo
 import logo from '../assets/logo.png';
+// clerck
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 // Icons
 import { CiUser, CiHeart, CiShoppingCart } from 'react-icons/ci';
 function NavbarComponent() {
@@ -22,7 +24,12 @@ function NavbarComponent() {
 				<div className='flex items-center space-x-4'>
 					<div className='flex items-center space-x-1'>
 						<CiUser size={24} color='white' />
-						<span className='text-mainWhite'>Login</span>
+			<SignedOut>
+							<SignInButton />
+			</SignedOut>
+<SignedIn>
+			<UserButton showName afterSignOutUrl='/'/>
+ </SignedIn>
 					</div>
 					<div className='flex items-center space-x-1'>
 						<CiHeart size={24} color='white' />
