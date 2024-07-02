@@ -4,12 +4,15 @@ import logo from '../assets/logo.png';
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 // Icons
 import { CiUser, CiHeart, CiShoppingCart } from 'react-icons/ci';
+import { Link } from 'react-router-dom';
 function NavbarComponent() {
 	return (
 		<div className='bg-mainBlue h-full md:h-[100px] lg:h-[100px] py-[10px] md:py-[0px] lg:py-[0px] flex items-center'>
 			<div className='container mx-auto flex justify-between items-center flex-col gap-[10px] md:gap-0 lg:gap-0 sm:flex-col md:flex-row lg:flex-row'>
+				<Link to={'/'}>
 				<img src={logo} alt='' />
-				{/* search bar */}
+				</Link>
+								{/* search bar */}
 				<div className='bg-mainWhite rounded-[20px]'>
 					<input
 						type='text'

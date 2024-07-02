@@ -15,8 +15,11 @@ function HomePage() {
 		.catch((err) => console.log(err))
 	},[])
 	return (
-		<div>
-			{isLoading ? <div>
+		<div className="container mx-auto">
+			<div>
+				<span>List/Grid View</span>
+			</div>
+			{isLoading ? <div className="flex flex-wrap items-center justify-center gap-5">
 				{allProducts.map((product) =>{
 					return <CardComponent key={product.id} product={product}/>
 				})}

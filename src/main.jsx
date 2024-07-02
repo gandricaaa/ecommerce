@@ -14,6 +14,7 @@ import { Provider } from 'react-redux';
 import store from './store/store.js';
 // Clerk Provider
 import { ClerkProvider } from '@clerk/clerk-react';
+import SingleProductPage from './pages/SingleProductPage.jsx';
 // Import your publisher key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 if (!PUBLISHABLE_KEY) {
@@ -29,7 +30,10 @@ const router = createBrowserRouter([
 				path: '/',
 				element: <HomePage />,
 			},
-			{},
+			{
+				path: '/singleProduct/:id',
+				element: <SingleProductPage/>
+			},
 		],
 	},
 ]);
