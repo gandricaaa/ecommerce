@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 // pages
 import HomePage from './pages/HomePage.jsx';
+import CartPage from './pages/CartPage.jsx';
 //redux
 import { Provider } from 'react-redux';
 import store from './store/store.js';
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
 				path: '/singleProduct/:id',
 				element: <SingleProductPage/>
 			},
+			{
+				path: '/cart',
+				element: <CartPage/>
+			}
 		],
 	},
 ]);

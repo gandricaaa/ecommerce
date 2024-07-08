@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import ProductService from '../services/productService';
 import { Rating } from '@mui/material';
 import { FaCheck} from 'react-icons/fa';
 import { RxCross1 } from 'react-icons/rx';
 import { IoIosHeartEmpty } from 'react-icons/io';
 import { FaShippingFast } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { saveInCartAction } from '../store/cartSlice';
 function SingleProductPage() {
     const [singleProduct,setSingleProduct] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [currentImage, setCurrentImage] = useState(0)
     const [countProduct, setCountProduct] = useState(1);
+    // Disptach for redux
+    const dispatch = useDispatch();
     // 3 stvari da prikazemo SINGLE PRODUCT.
     // 1. Uzmi ID
    let {id} = useParams();    
@@ -27,7 +31,12 @@ function SingleProductPage() {
     const handleImage = (index) => {
         setCurrentImage(index);
     }
-  return (
+const  handleProductCart = () => {
+    dispatch(saveInCartAction(singleProduct))
+
+    
+}
+return (
     <div className='pt-[120px] px-[20px]'>
         {isLoading ? <div className='container mx-auto flex flex-col md:flex-row gap-[40px] md:gap-[10px]'>
             {/* Left Side */}
@@ -66,7 +75,7 @@ function SingleProductPage() {
                 </div>
                </div>
                <div className='flex items-center gap-3 mt-[30px]'>
-                <button className='bg-mainOrange text-mainWhite px-[20px] py-[10px] rounded-full'>Add To Cart</button>
+                <Link to={'/cart'} onClick={handleProductCart} className='bg-mainOrange text-mainWhite px-[20px] py-[10px] rounded-full'>Add To Cart</Link>
                 <div className='bg-gray-100 p-[10px] rounded-full'>
                 <IoIosHeartEmpty size={30} cursor={'pointer'}/>
                 </div>
