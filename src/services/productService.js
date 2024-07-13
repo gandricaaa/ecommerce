@@ -1,8 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
-class ProductService { 
-static getAllProductsSerive = () => axios.get('/products?limit=50&skip=100')
-static getSingleProduct = (id) => axios.get(`/products/${id}`)
+class ProductService {
+    static getAllProductsService = (limit) => axios.get(`/products?limit=${limit}&skip=70`)
+    static getSingleProduct = (id) => axios.get(`/products/${id}`)
+    static getAllProductsByCategory = (category) => axios.get(`/products/category/${category}`)
+    static getSearchProducts = (search) => axios.get(`/products/search?q=${search}`)
 }
 
-export default ProductService
+export default ProductService;

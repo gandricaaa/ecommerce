@@ -1,68 +1,101 @@
-// images logo
+// images/logo
 import { useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
-// clerck
+// clerk
 import {
+	SignInButton,
 	SignedIn,
 	SignedOut,
-	SignInButton,
 	UserButton,
 } from '@clerk/clerk-react';
-// Icons
+// icons
 import { CiUser, CiHeart, CiShoppingCart } from 'react-icons/ci';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+// router
 import { Link } from 'react-router-dom';
-function NavbarComponent() {
-	const [totalProductLS, setTotalProductLS] = useState();
+import { saveSearchProductAction } from '../store/productSlice';
 
+function NavbarComponent() {
+	const [totalProductLS, setTotalProductLS] = useState(0);
+	const [searchProducts, setSearchProducts] = useState('');
+
+	// let totalProduct = JSON.parse(localStorage.getItem('cart_total'));
 	const { totalProduct } = useSelector((state) => state.cartStore);
+	const { favoriteTotal } = useSelector(
+		(state) => state.favoriteStore
+	);
+
+    const dispatch = useDispatch();
+
 	useEffect(() => {
 		let lsTotal = JSON.parse(localStorage.getItem('cart_total'));
+
 		if (lsTotal) {
 			setTotalProductLS(lsTotal);
+		} else {
+			setTotalProductLS(0);
 		}
 	}, [totalProduct]);
+
+    function handleSearchProducts() {
+        // console.log(searchProducts);
+        dispatch(saveSearchProductAction(searchProducts))
+        setSearchProducts('');
+    }
+
 	return (
-		<div className='bg-mainBlue h-full md:h-[100px] lg:h-[100px] py-[10px] md:py-[0px] lg:py-[0px] flex items-center'>
-			<div className='container mx-auto flex justify-between items-center flex-col gap-[10px] md:gap-0 lg:gap-0 sm:flex-col md:flex-col lg:flex-row'>
-				<Link to={'/'}>
-					<img src={logo} alt='' />
+		<div className='bg-mainBlue h-full lg:h-[100px] flex items-center py-[10px]'>
+			<div className='container mx-auto flex justify-between items-center flex-col lg:flex-row gap-[10px]'>
+				<Link to='/'>
+					<img src={logo} alt='logo-image' />
 				</Link>
+
 				{/* search bar */}
-				<div className='bg-mainWhite rounded-[20px]'>
+				<div className='bg-textWhite rounded-[20px]'>
 					<input
 						type='text'
 						placeholder='Search..'
-						className='bg-transparent outline-none px-[20px] py-[15px] rounded-[20px] placeholder:text-mainOrange text-mainBlue'
+						className='bg-transparent outline-none px-[20px] py-[15px] rounded-[20px] placeholder:text-mainYellow text-mainBlue'
+                        value={searchProducts}
+                        onChange={(e) => setSearchProducts(e.target.value)}
 					/>
-					<button className='bg-mainOrange text-mainWhite px-[30px] py-[15px] rounded-[20px]'>
+					<button 
+                    className='bg-mainYellow text-textWhite px-[30px] py-[15px] rounded-[20px]'
+                    onClick={handleSearchProducts}
+                    >
+
 						Search
 					</button>
 				</div>
+
 				{/* LoginSystem & Cart/Favorite */}
-				<div className='flex items-center space-x-4'>
-					<div className='flex items-center space-x-1'>
-						<CiUser size={24} color='white' />
+				<div className='flex items-center gap-[10px]'>
+					<div className='flex items-center gap-[5px]'>
+						<CiUser color='white' size={25} />
 						<SignedOut>
 							<SignInButton />
 						</SignedOut>
 						<SignedIn>
-							<UserButton showName afterSignOutUrl='/' />
+							<UserButton showName />
 						</SignedIn>
 					</div>
-					<div className='flex items-center space-x-1'>
-						<CiHeart size={24} color='white' />
-						<span className='text-mainWhite bg-mainOrange w-[20px] h-[20px] flex justify-center items-center rounded-full'>
-							0
+					<div className='flex items-center gap-[5px]'>
+						<CiHeart color='white' size={25} />
+						<span className='bg-mainYellow rounded-full text-textWhite w-[20px] h-[20px] flex items-center justify-center'>
+							{favoriteTotal}
 						</span>
-						<span className='text-mainWhite'>Favorite</span>
+						<Link
+							to='/favorite'
+							className='text-textWhite text-[18px]'>
+							Favorite
+						</Link>
 					</div>
-					<div className='flex items-center space-x-1'>
-						<CiShoppingCart size={24} color='white' />
-						<span className='text-mainWhite bg-mainOrange w-[20px] h-[20px] flex justify-center items-center rounded-full'>
-							{totalProduct ? totalProduct : 0}
+					<div className='flex items-center gap-[5px]'>
+						<CiShoppingCart color='white' size={25} />
+						<span className='bg-mainYellow rounded-full text-textWhite w-[20px] h-[20px] flex items-center justify-center'>
+							{totalProductLS}
 						</span>
-						<Link to={'/cart'} className='text-mainWhite'>
+						<Link to='/cart' className='text-textWhite text-[18px]'>
 							Cart
 						</Link>
 					</div>

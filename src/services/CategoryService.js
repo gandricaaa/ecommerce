@@ -1,7 +1,7 @@
-// eslint-disable-next-line no-unused-vars
-import axios from "axios";
+import axios from 'axios';
 
 class CategoryService {
     static getAllCategory = () => axios.get('/products/category-list')
 }
-export default CategoryService
+
+export default CategoryService;
